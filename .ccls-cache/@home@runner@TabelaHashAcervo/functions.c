@@ -1,46 +1,80 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
 #include "structures.h"
 
-int funcao_Esp(int codigo){
-  return (codigo % tam);
+int funcao_Esp(int codigo, int tentativa) {
+  return (codigo + tentativa) % tam;
 }
 
-Acervo* insere_Esp(Hash tab, int codigo, char* titulo, char* autor, char* area){
-  int h = funcao_Esp(codigo);
-  
-  Acervo* novo =(Acervo*)malloc(sizeof(Acervo));
-  novo->codigo = codigo;
-  strcpy(novo->titulo, titulo);
-  strcpy(novo->autor, autor);
-  strcpy(novo->area, area);
-  novo->prox = NULL;
+Acervo* insere_Esp(Hash tab, int codigo, char* titulo, char* autor, char* area) {
+  int tentativa = 0;
+  int h;
 
-  if(tab[h] == NULL){
-    tab[h] = novo;
-  } else {
-    Acervo* atual = tab[h];
-    while(atual->prox != NULL){
-      atual = atual->prox;  
+  do {
+    h = funcao_Esp(codigo, tentativa);
+
+    if (tab[h] == NULL) {
+      Acervo* novo = (Acervo*)malloc(sizeof(Acervo));
+      novo->codigo = codigo;
+      strcpy(novo->titulo, titulo);
+      strcpy(novo->autor, autor);
+      strcpy(novo->area, area);
+      novo->prox = NULL;
+      tab[h] = novo;
+      return novo;
     }
-    atual->prox = novo;
-  }
-  return novo;
-  
+
+    tentativa++;
+  } while (tentativa < tam); 
+  return NULL;
 }
 
-void remove_Esp(Hash tab, int codigo){
-  int h = funcao_Esp(codigo);
+void remove_Esp(Hash tab, int codigo) {
+  int tentativa = 0;
+  int h;
 
-  Acervo* atual = tab[h];
-  Acervo* anterior = NULL;
+  do {
+    h = funcao_Esp(codigo, tentativa);
 
-  while(atual != NULL && atual->codigo != codigo){
-    anterior = atual;
-    atual = atual->prox;
-  }
+    if (tab[h] != NULL && tab[h]->codigo == codigo) {
+      free(tab[h]);
+      tab[h] = NULL;
+      return;
+    }
 
-  if(atual != NULL){
-    if (anterior == NULL){
-      tab[h] = atual->prox; 
+    tentativa++;
+  } while (tentativa < tam);
+}
+
+Acervo* busca_Esp(Hash tab, int codigo) {
+  int tentativa = 0;
+  int h;
+
+  // Procurar o elemento usando o espalhamento aberto
+  do {
+    h = funcao_Esp(codigo, tentativa);
+
+    if (tab[h] != NULL && tab[h]->codigo == codigo) {
+      return tab[h];
+    }
+
+    tentativa++;
+  } while (tentativa < tam);
+
+  return NULL;
+}
+
+void listarExemplares(Hash tab){
+  printf("\nExemplares no acervo:\n");
+  for(int i = 0; i < tam; i++){
+    Acervo* atual = tab[i];
+
+    while(atual != NULL){
+      printf("Codigo: %d\nTitulo: %s\nAutor: %s\nArea: %s\n", atual->codigo, atual->titulo, atual->autor, atual->area);
+      atual = atual->prox;
     }
   }
 }
+

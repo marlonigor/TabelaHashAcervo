@@ -1,4 +1,4 @@
-#ifdef structures_h
+#ifndef structures_h
 #define structures_h
 
 #define tam 250
@@ -13,5 +13,15 @@ struct exemplares {
 
 typedef struct exemplares Acervo;
 typedef Acervo* Hash[tam];
+
+int funcao_Esp(int codigo, int tentativa);
+
+Acervo* insere_Esp(Hash tab, int codigo, char* titulo, char* autor, char* area);
+
+void remove_Esp(Hash tab, int codigo);
+
+Acervo* busca_Esp(Hash tab, int codigo);
+
+void listarExemplares(Hash tab);
 
 #endif
