@@ -72,9 +72,10 @@ void listarExemplares(Hash tab){
     Acervo* atual = tab[i];
 
     while(atual != NULL){
-      printf("Codigo: %d\nTitulo: %s\nAutor: %s\nArea: %s\n", atual->codigo, atual->titulo, atual->autor, atual->area);
+      printf("Codigo: %d \nTitulo: %s \nAutor: %s \nArea: %s", atual->codigo, atual->titulo, atual->autor, atual->area);
       atual = atual->prox;
     }
   }
+  printf("\n");
 }
 

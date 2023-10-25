@@ -33,19 +33,24 @@ int main(void) {
       case 1:
         printf("Informe o código do exemplar:");
         scanf("%d", &codigo);
-      
+
         printf("Informe o título:");
+        while(getchar() != '\n');
         fgets(titulo, sizeof(titulo), stdin);
-        while(getchar()!='\n');
-
+        titulo[strcspn(titulo, "\n")] = '\0';
+  
         printf("Informe o autor:");
-        fgets(autor, 41, stdin);
+        fflush(stdin);
+        fgets(autor, sizeof(autor), stdin);
         autor[strcspn(autor, "\n")] = '\0';
-
+  
         printf("Informe o área:");
-        fgets(area, 7, stdin);
-
+        fflush(stdin);
+        fgets(area, sizeof(area), stdin);
+        area[strcspn(area, "\n")] = '\0';
+  
         insere_Esp(tabela, codigo, titulo, autor, area);
+
         
       break;
       case 2:
@@ -53,6 +58,7 @@ int main(void) {
         scanf("%d", &codigo);
         remove_Esp(tabela, codigo);
       break;
+      
       case 3:
         printf("Informe o código do exemplar a ser buscado: ");
         scanf("%d", &codigo);
@@ -64,11 +70,14 @@ int main(void) {
           printf("Exemplar não encontrado!\n");
         }
       break;
+      
       case 4:
         listarExemplares(tabela);
         break;
       case 0:
+        
         break;
+      
       default:
         printf("Opção inválida!\n");
     }
