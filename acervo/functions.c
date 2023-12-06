@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <locale.h>
 #include "structures.h"
 
 int funcao_Esp(int codigo, int tentativa) {
@@ -72,7 +68,7 @@ void listarExemplares(Hash tab){
     Acervo* atual = tab[i];
 
     while(atual != NULL){
-      printf("Codigo: %d \nTitulo: %s \nAutor: %s \nArea: %s", atual->codigo, atual->titulo, atual->autor, atual->area);
+      printf("Codigo: %d Titulo: %s Autor: %s Area: %s\n", atual->codigo, atual->titulo, atual->autor, atual->area);
       atual = atual->prox;
     }
   }

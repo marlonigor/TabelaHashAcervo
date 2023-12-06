@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <locale.h>
 #include "structures.h"
 
 int main(void) {
@@ -30,6 +26,7 @@ int main(void) {
     scanf("%d", &opcao);
 
     switch(opcao){
+      
       case 1:
         printf("Informe o código do exemplar:");
         scanf("%d", &codigo);
@@ -50,9 +47,8 @@ int main(void) {
         area[strcspn(area, "\n")] = '\0';
   
         insere_Esp(tabela, codigo, titulo, autor, area);
-
-        
       break;
+      
       case 2:
         printf("Informe o código do exemplar a ser removido: ");
         scanf("%d", &codigo);
@@ -65,7 +61,7 @@ int main(void) {
         Acervo* encontrado = busca_Esp(tabela, codigo);
         if(encontrado != NULL){
           printf("Exemplar encontrado: \n");
-        printf("Código: %d, Título: %s, Autor: %s, Área: %s\n", encontrado->codigo, encontrado->titulo, encontrado->autor, encontrado->area);
+          printf("Código: %d, Título: %s, Autor: %s, Área: %s\n", encontrado->codigo, encontrado->titulo, encontrado->autor, encontrado->area);
         }else{
           printf("Exemplar não encontrado!\n");
         }
@@ -75,7 +71,7 @@ int main(void) {
         listarExemplares(tabela);
         break;
       case 0:
-        
+        return 0;
         break;
       
       default:
